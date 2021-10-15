@@ -78,6 +78,10 @@ impl Lexer {
     //    let err = Error::new(m.to_string(), data.to_string());
     //    self.errors.push(err)
     //}
+
+    pub(crate) fn to_parts(self) -> (Vec<Token>, Vec<Error>) {
+        (self.tokens, self.errors)
+    }
 }
 
 fn advance(input: &mut &str) -> Result<Token, Error> {
@@ -165,7 +169,7 @@ fn advance(input: &mut &str) -> Result<Token, Error> {
                             || is_source_char(c) && c != '\\' && c != '"' && !is_line_terminator(c)
                         {
                             buf.push(chars.next().unwrap());
-                        // TODO @lrlna: this should error if c == \ or has a line terminator
+                            // TODO @lrlna: this should error if c == \ or has a line terminator
                         } else {
                             break;
                         }
