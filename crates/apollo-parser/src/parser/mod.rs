@@ -20,6 +20,7 @@ mod language;
 mod syntax_tree;
 mod token_text;
 pub(crate) mod utils;
+
 /// Parse text into an AST.
 #[derive(Debug)]
 pub struct Parser {
@@ -192,6 +193,10 @@ impl Parser {
             .filter(|token| !matches!(token.kind(), TokenKind::Whitespace | TokenKind::Comment))
             .collect::<Vec<Token>>();
         tok.get(tok.len() - n).map(|token| token.data().to_string())
+    }
+
+    pub fn errors(&self) -> std::slice::Iter<Error> {
+        self.errors.iter()
     }
 }
 
